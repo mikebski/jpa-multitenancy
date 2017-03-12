@@ -67,7 +67,7 @@ public class TenantRegistry {
      */
     private EntityManagerFactory createEntityManagerFactory(final Tenant tenant) {
         final Map<String, String> props = new TreeMap<>();
-        logger.debug("Creating entity manager factory on schema '" + tenant.getSchemaName() + "' for tenant '" + tenant.getName() + "'.");
+        logger.error("Creating entity manager factory on schema '" + tenant.getSchemaName() + "' for tenant '" + tenant.getName() + "'.");
         props.put("hibernate.default_schema", tenant.getSchemaName());
         return Persistence.createEntityManagerFactory("test", props);
     }

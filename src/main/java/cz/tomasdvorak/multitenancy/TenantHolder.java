@@ -20,5 +20,4 @@ class TenantHolder {
     public static void cleanupTenant() {
         currentTenantName.remove();
     }
-
 }

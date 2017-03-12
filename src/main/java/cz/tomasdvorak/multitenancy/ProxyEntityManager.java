@@ -35,7 +35,7 @@ public class ProxyEntityManager {
     @Inject
     private TenantRegistry tenantRegistry;
 
-    private static final Logger logger = Logger.getLogger(ProxyEntityManager.class);
+    private static final Logger L = Logger.getLogger(ProxyEntityManager.class);
 
     /**
      * CDI Producer. Checks if there is a tenant name in ThreadLocal storage {@link TenantHolder}. If yes, load tenant from {@link TenantRegistry},
@@ -45,14 +45,16 @@ public class ProxyEntityManager {
      */
     @Produces
     private EntityManager getEntityManager() {
+    	L.info("Producing entity manager");
         final String currentTenant = TenantHolder.getCurrentTenant();
 
         final EntityManager target;
 
         if (currentTenant != null) {
-            logger.debug("Returning connection for tenant " + currentTenant);
+            L.info("Returning connection for tenant " + currentTenant);
             target = tenantRegistry.getEntityManagerFactory(currentTenant).createEntityManager();
         } else {
+        	L.info("Getting OG entity manager.");
             target = entityManager;
         }
         return (EntityManager) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class<?>[]{EntityManager.class},
